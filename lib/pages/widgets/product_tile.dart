@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:omeoo_martino/models/product_model.dart';
 import 'package:omeoo_martino/themes.dart';
 
 class ProductTile extends StatelessWidget {
+  final ProductModel product;
+  ProductTile(this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +17,9 @@ class ProductTile extends StatelessWidget {
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(20
-            
-            ),
+            borderRadius: BorderRadius.circular(20),
             child: Image.asset(
-              'assets/baju_merah.jpg',
+              'assets/${product.images![0].img_name}',
               width: 120,
               height: 120,
               fit: BoxFit.cover,
@@ -31,23 +32,28 @@ class ProductTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 6,),
+                SizedBox(
+                  height: 6,
+                ),
                 Text(
-                  'Baju Merah',
+                  '${product.name}',
                   style: primaryTextStyle.copyWith(
-                    fontSize: 16,fontWeight: semiBold,
+                    fontSize: 16,
+                    fontWeight: semiBold,
                   ),
                 ),
-                SizedBox(height: 6,),
+                SizedBox(
+                  height: 6,
+                ),
                 Text(
-                  'Rp. 10000',
+                  'Rp. ${product.price}',
                   style: priceTextStyle.copyWith(
                     fontWeight: medium,
-                  ),  
+                  ),
                 )
               ],
             ),
-            ),
+          ),
         ],
       ),
     );

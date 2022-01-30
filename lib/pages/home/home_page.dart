@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:omeoo_martino/models/user_model.dart';
 import 'package:omeoo_martino/pages/widgets/product_tile.dart';
 import 'package:omeoo_martino/providers/auth_provider.dart';
+import 'package:omeoo_martino/providers/product_provider.dart';
 import 'package:omeoo_martino/themes.dart';
 import 'package:provider/provider.dart';
 
@@ -9,8 +10,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
-
     UserModel user = authProvider.user;
+
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
 
 
     Widget header() {
@@ -58,12 +60,11 @@ class HomePage extends StatelessWidget {
           top: 14,
         ),
         child: Column(
-          children: [
-            ProductTile(),
-            ProductTile(),
-            ProductTile(),
-            ProductTile(),
-          ],
+          children: productProvider.products
+              .map(
+                (product) => ProductTile(product),
+              )
+              .toList(),
         ),
       );
     }
