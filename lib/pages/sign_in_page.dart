@@ -1,9 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:omeoo_martino/providers/auth_provider.dart';
 import 'package:omeoo_martino/themes.dart';
+import 'package:provider/provider.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  @override
+  
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleSignIn() async {
+
+ 
+      if (await authProvider.login(
+        email: emailController.text,
+        password: passwordController.text,
+      )) {
+        Navigator.pushNamed(context, '/dashboard');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: alertColor,
+          content: Text(
+            'Gagal Login',
+            textAlign: TextAlign.center,
+          ),
+        ));
+      }
+
+
+    }
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -56,6 +90,7 @@ class SignInPage extends StatelessWidget {
                     ),
                     Expanded(
                         child: TextFormField(
+                      controller: emailController,
                       decoration: InputDecoration.collapsed(
                         hintText: "Masukan Email",
                       ),
@@ -106,6 +141,7 @@ class SignInPage extends StatelessWidget {
                     Expanded(
                         child: TextFormField(
                       obscureText: true,
+                      controller: passwordController,
                       decoration: InputDecoration.collapsed(
                         hintText: "Masukan Password",
                       ),
@@ -125,9 +161,7 @@ class SignInPage extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/splash');
-          },
+          onPressed: handleSignIn,
           style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
               shape: RoundedRectangleBorder(
@@ -155,6 +189,7 @@ class SignInPage extends StatelessWidget {
               emailInput(),
               passInput(),
               signInButton(),
+              // signInButton(),
             ],
           ),
         ),
