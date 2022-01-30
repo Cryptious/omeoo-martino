@@ -24,7 +24,7 @@ class _SignInPageState extends State<SignInPage> {
         email: emailController.text,
         password: passwordController.text,
       )) {
-        Navigator.pushNamed(context, '/dashboard');
+        Navigator.pushNamed(context, '/splash');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: alertColor,
